@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="site-head">
+	<meta charset="UTF-8" />
+	<title>Home</title>
+	
+	<!-- add css by static file -->	
+	<link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
+	
+	<!-- add dependency by web jar -->
+	<script 
+    src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" 
+    th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+    
+    <link
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+    rel="stylesheet" ></link>
+    
+</head>
+<body>
+	<header th:fragment="site-header">
+		<img src="" alt="" th:src="@{/img/site-logo.png}"/>
+	</header>
+	<footer th:fragment="site-footer">
+		This is a footer page
+	</footer>
+</body>
+</html>

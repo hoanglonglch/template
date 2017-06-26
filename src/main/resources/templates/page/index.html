@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: site-head">
+</head>
+<body>
+	<header th:replace="layout :: site-header"></header>
+	<h1>Register student</h1>
+	<form action="/" th:object="${student}" method="post" style="border-radius: 2px; padding: 12px; border: 1px solid #ccc">
+		<p>first name</p>
+		<input type="text" th:field="*{firstName}" />
+		<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+
+		<p>email</p>
+		<input type="text" th:field="*{email}" />
+		<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+		<br /> 
+		
+		<!-- <button th:name="addForm" type="submit" value="formValueButton" id="addForm">Add Form</button> -->
+		<input type="submit" name="addForm" id="addForm" value="Add Form"/>
+		<p>Form list</p>
+		<div th:each="bank,bankStat :*{banks}">
+    		<table style="border: 1px soild red" border="1" class="bankForm">
+    			<thead>
+    				<tr>
+						<th><p>id</p></th>
+						<th><p>bank name</p></th>
+						<th><button name="removeRow" th:value="${bankStat.index}" type="submit">remove form</button></th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				<tr>
+    					<td><input type="text" th:value="${bank.id}" th:field="*{banks[__${bankStat.index}__].id}" /></td>
+    					<td><input type="text" th:value="${bank.name}" th:field="*{banks[__${bankStat.index}__].name}" /></td>
+    				</tr>
+    			</tbody>	
+    		</table>
+    	</div>
+    	
+    	<p id="formBankIndex" th:if="${#lists.size(student.banks)} eq 4" th:text="'maximum is 4'"></p>
+		<button name="saveForm" type="submit"> save</button>
+	</form>
+	<p th:text="#{welcome.message}"></p>
+	 <script type="text/javascript">
+	 $("#addForm").click(function(){
+		 var numItems = $('.bankForm').length;
+			if(numItems == 4){
+				$('#addForm').attr("disabled", true);
+			} 
+	 });
+    </script>
+	<footer th:replace="layout :: site-footer"></footer>
+</body>
+</html>

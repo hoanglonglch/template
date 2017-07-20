@@ -1,5 +1,7 @@
 package com.guru.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -22,14 +24,15 @@ public class HomeController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String showHome(Model model,Student student){
-		model.addAttribute("limit","limit item");
+		model.addAttribute("message","limit item");
 		student.getBanks().add(new Bank());
 		return "page/index";
 	}
 
 	@RequestMapping(params={"addForm"})
-	public String addRow(Student student,@RequestParam("addForm") String addForm){
+	public String addRow(Student student,@RequestParam("addForm") String addForm,@ModelAttribute("message")String message){
 		student.getBanks().add(new Bank());
+		logger.info("message isc "+message);
 		return "page/index";
 	}
 	

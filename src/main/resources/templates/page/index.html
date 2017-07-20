@@ -3,20 +3,21 @@
 <head th:replace="layout :: site-head">
 </head>
 <body>
+	<!-- import header from layout's site header -->
 	<header th:replace="layout :: site-header"></header>
 	<h1>Register student</h1>
-	<form action="/" th:object="${student}" method="post" style="border-radius: 2px; padding: 12px; border: 1px solid #ccc">
+	<form action="/" th:object="${student}" method="post" style="border-radius: 2px; padding: 12px; border: 1px solid #ccc" name="registerForm">
 		<p>first name</p>
 		<input type="text" th:field="*{firstName}" />
 		<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
-
+	
 		<p>email</p>
 		<input type="text" th:field="*{email}" />
 		<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
 		<br /> 
 		
-		<!-- <button th:name="addForm" type="submit" value="formValueButton" id="addForm">Add Form</button> -->
-		<input type="submit" name="addForm" id="addForm" value="Add Form"/>
+		<button th:name="addForm" type="submit" value="formValueButton">Add Form</button>
+		<input name="addForm" type="submit" value="Add Form" th:value="ahihi"/>
 		<p>Form list</p>
 		<div th:each="bank,bankStat :*{banks}">
     		<table style="border: 1px soild red" border="1" class="bankForm">
@@ -30,23 +31,27 @@
     			<tbody>
     				<tr>
     					<td><input type="text" th:value="${bank.id}" th:field="*{banks[__${bankStat.index}__].id}" /></td>
-    					<td><input type="text" th:value="${bank.name}" th:field="*{banks[__${bankStat.index}__].name}" /></td>
+    					<!-- <td><input type="text" th:value="${bank.name}" th:field="*{banks[__${bankStat.index}__].name}" /></td> -->
+    					<td><input type="text" th:value="*{banks[__${bankStat.index}__].name}" /></td>
     				</tr>
     			</tbody>	
     		</table>
     	</div>
-    	
+    		
     	<p id="formBankIndex" th:if="${#lists.size(student.banks)} eq 4" th:text="'maximum is 4'"></p>
 		<button name="saveForm" type="submit"> save</button>
+		
 	</form>
 	<p th:text="#{welcome.message}"></p>
+	<h3 th:text="${message}"></h3>
 	 <script type="text/javascript">
-	 $("#addForm").click(function(){
-		 var numItems = $('.bankForm').length;
+	 	let btnAddForm=$('form[name=registerForm] button[name=addForm]');
+	 	btnAddForm.click(function(){
+			var numItems = $('.bankForm').length;
 			if(numItems == 4){
-				$('#addForm').attr("disabled", true);
-			} 
-	 });
+				btnAddForm.attr("disabled", true);
+			}   
+		});				 	
     </script>
 	<footer th:replace="layout :: site-footer"></footer>
 </body>
